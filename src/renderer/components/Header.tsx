@@ -27,7 +27,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
         <div className="flex items-baseline gap-1.5">
           <span className="font-extrabold tracking-wider text-sm text-slate-100 uppercase">
-            USB<span className="text-cyan-400">Writer</span>
+            FLASH<span className="text-cyan-400">LANE</span>
           </span>
           <span className="text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700/50">
             v1.0.0

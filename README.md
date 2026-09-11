@@ -1,8 +1,9 @@
-# ⚡ USB Writer
+# ⚡ FlashLane
 
 > **Universal, high-speed bootable ISO/IMG USB writer for Windows, macOS, and Linux — with Rufus-grade partition control & non-destructive simulation.**
 
-[![CI Build & Verify](https://github.com/RitualDev-Lab/usb-writer/actions/workflows/ci.yml/badge.svg)](https://github.com/RitualDev-Lab/usb-writer/actions)
+[![CI Build & Verify](https://github.com/RitualDev-Lab/FlashLane/actions/workflows/ci.yml/badge.svg)](https://github.com/RitualDev-Lab/FlashLane/actions)
+[![Release Multi-Platform](https://github.com/RitualDev-Lab/FlashLane/actions/workflows/release.yml/badge.svg)](https://github.com/RitualDev-Lab/FlashLane/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Electron](https://img.shields.io/badge/Electron-33-47848F?logo=electron&logoColor=white)](https://electronjs.org/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
@@ -10,7 +11,7 @@
 
 ---
 
-## 🚀 Key Features
+## 🌟 Features
 
 * **⚡ Ultra-High Speed Flashing Engine:**
   * 4MB chunked streaming I/O pipeline with real-time speed monitoring ($MB/s$) and accurate dynamic ETA calculation.
@@ -33,80 +34,91 @@
 
 ---
 
-## 🛠️ Architecture
+## 🧪 How to Test FlashLane
 
-```mermaid
-flowchart TD
-    subgraph UI ["Renderer Process (React + Tailwind)"]
-        A[Header / Simulation Switch]
-        B[Drive Selector]
-        C[ISO / IMG Boot Inspector]
-        D[Partition & Format Config]
-        E[Live Telemetry Console]
-        F[Safety Confirmation Modal]
-        G[Terminal Log Console]
-    end
-
-    subgraph IPC ["Preload ContextBridge (IPC API)"]
-        H[drives:list]
-        I[image:select / inspect / checksum]
-        J[flash:start / cancel]
-        K[flash:progress / flash:log]
-    end
-
-    subgraph Main ["Main Process Engine (Node / Electron)"]
-        L[OS Drive Detector: Windows CIM / Linux lsblk / macOS diskutil]
-        M[Safety Filter: Locks System Disks]
-        N[ISO/IMG Parser: CD001 / 0x55AA / GPT]
-        O[High-Speed Chunk Flasher / Simulator]
-        P[Multi-Hash Stream: SHA-256 / SHA-1 / MD5]
-    end
-
-    UI <--> IPC
-    IPC <--> Main
-```
-
----
-
-## 📦 Getting Started
-
-### Prerequisites
-* **Node.js**: `v20.x` or `v22.x`
-* **pnpm**: `v10.x` or `v11.x`
-
-### Installation
-```bash
-# Clone the repository
-git clone https://github.com/RitualDev-Lab/usb-writer.git
-cd usb-writer
-
-# Install dependencies
-pnpm install
-```
-
-### Development Mode
-Launch the application with Hot-Module Replacement (HMR):
+### 1. Interactive Development & UI Testing
+Launch the desktop application with live reload:
 ```bash
 pnpm dev
 ```
 
-### Production Build
-Compile TypeScript and bundle binaries for your platform:
-```bash
-# Type check & build renderer + main processes
-pnpm build:electron
+### 2. Testing with Built-In Simulation Mode (No USB Required!)
+1. Open FlashLane in dev mode or as a built app.
+2. In the top bar, ensure the mode badge says **`SIMULATION`** (amber badge).
+3. If no physical USB is plugged in, the **Target Drive** dropdown will automatically offer `SanDisk Ultra USB 3.0 [VIRTUAL SIMULATOR] 32GB`.
+4. Click **Select** and pick any `.iso` or `.img` file (e.g. Ubuntu, Windows, Arch, or even a test file).
+5. Review the auto-detected OS label and boot scheme. Click **Verify Hash** to calculate streaming SHA-256.
+6. Click **Start Flashing [Simulation Mode]**.
+7. Confirm the Safety Modal.
+8. Watch real-time 4MB streaming chunks, live write speed ($MB/s$), ETA, and the SHA-256 post-write verification pass with live logs.
 
-# Package executable (NSIS installer / Portable / AppImage / DMG)
-pnpm build
-```
+### 3. Testing Physical Hardware Flashing
+1. Insert a spare USB drive (e.g. 8GB - 64GB).
+2. Click **Scan** in FlashLane to refresh connected drives.
+3. Toggle the top bar switch to **`PHYSICAL WRITE`** (emerald badge).
+4. Select your USB drive and ISO image.
+5. Click **Start Writing Bootable USB**. FlashLane will show an explicit confirmation warning showing the target drive letter, capacity, and path before writing.
 
 ---
 
-## 🔒 Safety & Accidental Data Loss Prevention
+## 📦 Multi-Platform Releases (GitHub Actions)
 
-1. **System Disk Immunity**: The discovery module cross-references volume drive letters against primary OS partitions. If a target drive contains `C:\` or the active OS root, physical flashing is completely disabled in the UI.
-2. **Explicit Verification Dialog**: Even on valid removable USBs, flashing requires confirmation showing the drive name, physical path, and capacity.
-3. **Simulation Mode Toggle**: Always available in the top bar to safely test images, configurations, and verification passes without writing to hardware.
+FlashLane includes an automated CI/CD pipeline ([`.github/workflows/release.yml`](.github/workflows/release.yml)) that builds native binaries for all 3 major operating systems:
+
+* **Windows**: NSIS Setup (`.exe`) + Standalone Portable (`.exe`)
+* **Linux**: Universal AppImage (`.AppImage`) + Debian Package (`.deb`)
+* **macOS**: Apple Disk Image (`.dmg`) + Compressed Archive (`.zip`)
+
+### How to Trigger a Release:
+Whenever you want to publish a new release:
+```bash
+# 1. Tag your commit
+git tag v1.0.0
+
+# 2. Push the tag to GitHub
+git push origin v1.0.0
+```
+GitHub Actions will automatically run matrix jobs on Windows, Ubuntu, and macOS runners, compile the code, and publish all release assets directly to [GitHub Releases](https://github.com/RitualDev-Lab/FlashLane/releases).
+
+---
+
+## 🏬 Releasing on Microsoft Store
+
+FlashLane supports building official Microsoft Store `.appx` / `.msix` packages:
+
+### Step 1: Register on Microsoft Partner Center
+1. Create a developer account at [partner.microsoft.com](https://partner.microsoft.com/dashboard).
+2. Reserve your app name (e.g. `FlashLane`).
+3. Under **Product management &rarr; Product Identity**, copy:
+   - **Package/Identity Name**
+   - **Publisher ID** (e.g. `CN=XXXXXXXX-XXXX-...`)
+   - **Publisher display name**
+
+### Step 2: Configure `electron-builder.json`
+Update the `appx` section in `electron-builder.json` with your credentials:
+```json
+"appx": {
+  "identityName": "RitualDevLab.FlashLane",
+  "publisher": "CN=YOUR-PUBLISHER-ID-FROM-PARTNER-CENTER",
+  "publisherDisplayName": "RitualDev Lab",
+  "applicationId": "RitualDevLab.FlashLane"
+}
+```
+
+### Step 3: Build the Store Package
+Run the following command:
+```bash
+npx electron-builder --win appx
+```
+This generates `release/FlashLane 1.0.0.appx` ready for upload.
+
+### Step 4: Validate & Submit
+1. Test your package locally using the Windows App Certification Kit (WACK):
+   ```bash
+   appcert test -apptype desktop -packagepath "release\FlashLane 1.0.0.appx"
+   ```
+2. Upload the `.appx` file into your Microsoft Partner Center submission dashboard.
+3. Fill in screenshots, description, and privacy policy, then click **Submit to the Store**.
 
 ---
 

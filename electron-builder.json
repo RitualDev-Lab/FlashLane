@@ -1,6 +1,6 @@
 {
-  "appId": "com.ritualdev.usbwriter",
-  "productName": "USB Writer",
+  "appId": "com.ritualdev.flashlane",
+  "productName": "FlashLane",
   "directories": {
     "output": "release"
   },
@@ -17,6 +17,10 @@
       {
         "target": "portable",
         "arch": ["x64"]
+      },
+      {
+        "target": "appx",
+        "arch": ["x64"]
       }
     ],
     "requestedExecutionLevel": "requireAdministrator"
@@ -26,9 +30,14 @@
     "allowToChangeInstallationDirectory": true,
     "createDesktopShortcut": true
   },
+  "appx": {
+    "identityName": "RitualDevLab.FlashLane",
+    "publisherDisplayName": "RitualDev Lab",
+    "applicationId": "RitualDevLab.FlashLane"
+  },
   "mac": {
     "category": "public.app-category.utilities",
-    "target": ["dmg"]
+    "target": ["dmg", "zip"]
   },
   "linux": {
     "target": ["AppImage", "deb"],

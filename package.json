@@ -1,5 +1,5 @@
 {
-  "name": "usb-writer",
+  "name": "flashlane",
   "version": "1.0.0",
   "description": "Universal, high-speed bootable ISO/IMG USB writer for Windows, macOS, and Linux",
   "type": "module",
