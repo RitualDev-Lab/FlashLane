@@ -1,11 +1,42 @@
-import { defineConfig } from 'vite';
+import { defineConfig, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import electron from 'vite-plugin-electron';
 import renderer from 'vite-plugin-electron-renderer';
 import path from 'path';
+import fs from 'fs';
+
+function copyPreloadPlugin(): Plugin {
+  const copyPreload = () => {
+    const src = path.resolve(__dirname, 'src/preload/index.cjs');
+    const destDir = path.resolve(__dirname, 'dist-electron/preload');
+    if (!fs.existsSync(destDir)) {
+      fs.mkdirSync(destDir, { recursive: true });
+    }
+    fs.copyFileSync(src, path.join(destDir, 'index.cjs'));
+    const oldJs = path.join(destDir, 'index.js');
+    if (fs.existsSync(oldJs)) {
+      try {
+        fs.unlinkSync(oldJs);
+      } catch {}
+    }
+  };
+
+  return {
+    name: 'copy-preload-cjs',
+    buildStart() {
+      copyPreload();
+    },
+    handleHotUpdate(ctx) {
+      if (ctx.file.includes('preload')) {
+        copyPreload();
+      }
+    },
+  };
+}
 
 export default defineConfig({
   plugins: [
+    copyPreloadPlugin(),
     react(),
     electron([
       {
@@ -18,22 +49,6 @@ export default defineConfig({
             outDir: 'dist-electron/main',
             rollupOptions: {
               external: ['electron'],
-            },
-          },
-        },
-      },
-      {
-        entry: 'src/preload/index.ts',
-        onstart(options) {
-          options.reload();
-        },
-        vite: {
-          build: {
-            outDir: 'dist-electron/preload',
-            lib: {
-              entry: 'src/preload/index.ts',
-              formats: ['cjs'],
-              fileName: () => 'index.cjs',
             },
           },
         },

@@ -12,9 +12,13 @@ app.disableHardwareAcceleration();
 let mainWindow: BrowserWindow | null = null;
 
 function createWindow() {
-  const cjsPreload = path.join(__dirname, '../preload/index.cjs');
-  const jsPreload = path.join(__dirname, '../preload/index.js');
-  const preloadPath = fs.existsSync(cjsPreload) ? cjsPreload : jsPreload;
+  const distPreload = path.resolve(__dirname, '../preload/index.cjs');
+  const devPreload = path.resolve(__dirname, '../../src/preload/index.cjs');
+  const preloadPath = fs.existsSync(distPreload) ? distPreload : devPreload;
+
+  console.log('⚡ [FlashLane Main] Initializing BrowserWindow...');
+  console.log('⚡ [FlashLane Main] Preload script path:', preloadPath);
+  console.log('⚡ [FlashLane Main] Preload exists:', fs.existsSync(preloadPath));
 
   mainWindow = new BrowserWindow({
     width: 600,
@@ -31,6 +35,16 @@ function createWindow() {
       contextIsolation: true,
       sandbox: false,
     },
+  });
+
+  // Track preload script loading errors
+  mainWindow.webContents.on('preload-error', (_event, scriptPath, err) => {
+    console.error('❌ [FlashLane Main] CRITICAL PRELOAD ERROR at', scriptPath, ':', err);
+  });
+
+  // Relay renderer console messages to the terminal
+  mainWindow.webContents.on('console-message', (_event, level, message) => {
+    console.log(`[Renderer Log]:`, message);
   });
 
   registerIpcHandlers(mainWindow);
