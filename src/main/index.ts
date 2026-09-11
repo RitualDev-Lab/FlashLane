@@ -1,6 +1,9 @@
 import { app, BrowserWindow } from 'electron';
-import path from 'path';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { registerIpcHandlers } from './ipc';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Disable hardware acceleration issues if running in some VM environments
 app.disableHardwareAcceleration();
