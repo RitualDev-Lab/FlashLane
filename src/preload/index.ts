@@ -45,6 +45,7 @@ const api: ElectronAPI = {
   openExternal: (url: string) => ipcRenderer.send('shell:openExternal', url),
 };
 
+console.log('⚡ [FlashLane] Preload loaded, exposing electronAPI to window.');
 contextBridge.exposeInMainWorld('electronAPI', api);
 
 declare global {

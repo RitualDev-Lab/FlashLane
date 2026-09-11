@@ -44,6 +44,6 @@ export async function getConnectedUsbDrives(includeSystemDrives = false): Promis
     partitionTable: 'MBR',
   };
 
-  // Prepend or append the virtual drive
-  return [virtualDrive, ...filtered];
+  // Return physical USB drives first, then simulator drive
+  return [...filtered, virtualDrive];
 }

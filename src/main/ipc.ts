@@ -9,11 +9,15 @@ let currentFlasher: DiskFlasher | null = null;
 export function registerIpcHandlers(mainWindow: BrowserWindow) {
   // 1. Enumerate USB Drives
   ipcMain.handle('drives:list', async (): Promise<UsbDrive[]> => {
-    return await getConnectedUsbDrives(false);
+    console.log('⚡ [IPC] drives:list requested...');
+    const drives = await getConnectedUsbDrives(false);
+    console.log(`⚡ [IPC] Found ${drives.length} drives:`, drives.map(d => `${d.name} [${d.devicePath}]`));
+    return drives;
   });
 
   // 2. Open Native File Dialog to Select ISO/IMG
   ipcMain.handle('image:select', async (): Promise<string | null> => {
+    console.log('⚡ [IPC] image:select requested...');
     const result = await dialog.showOpenDialog(mainWindow, {
       title: 'Select Bootable Disk Image (ISO / IMG)',
       properties: ['openFile'],
@@ -24,8 +28,10 @@ export function registerIpcHandlers(mainWindow: BrowserWindow) {
     });
 
     if (result.canceled || result.filePaths.length === 0) {
+      console.log('⚡ [IPC] image:select canceled by user');
       return null;
     }
+    console.log('⚡ [IPC] Selected image:', result.filePaths[0]);
     return result.filePaths[0];
   });
 

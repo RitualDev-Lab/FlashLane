@@ -38,6 +38,8 @@ export const App: React.FC = () => {
     isSimulation: false,
   });
 
+  const [isApiConnected, setIsApiConnected] = useState<boolean>(true);
+
   // Keep options in sync with simulation toggle
   useEffect(() => {
     setOptions((prev) => ({ ...prev, isSimulation }));
@@ -45,6 +47,12 @@ export const App: React.FC = () => {
 
   // Load USB Drives
   const refreshDrives = useCallback(async () => {
+    if (!window.electronAPI) {
+      console.warn('⚡ [FlashLane] window.electronAPI not yet available');
+      setIsApiConnected(false);
+      return;
+    }
+    setIsApiConnected(true);
     setIsScanningDrives(true);
     try {
       const detected = await window.electronAPI?.listDrives();
@@ -72,6 +80,17 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     refreshDrives();
+
+    let retryTimer: any = null;
+    if (!window.electronAPI) {
+      retryTimer = setInterval(() => {
+        if (window.electronAPI) {
+          setIsApiConnected(true);
+          refreshDrives();
+          clearInterval(retryTimer);
+        }
+      }, 300);
+    }
 
     // Listen to real-time progress & logs
     const cleanupProgress = window.electronAPI?.onProgress((prog) => {
