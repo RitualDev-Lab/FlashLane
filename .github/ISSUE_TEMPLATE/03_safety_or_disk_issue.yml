@@ -1,0 +1,36 @@
+name: ??? Safety or System Disk Drive Report
+description: Report an anomaly regarding internal drive detection or safety lockout guards
+title: "[Safety Anomaly]: <Drive / System details>"
+labels: ["safety", "critical", "priority:high"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### ?? System Disk Safety Anomaly
+        FlashLane strictly locks down and hides all primary operating system drives (`C:\`, root `/`, PhysicalDrive0).
+        If an internal OS drive ever appeared selectable in the target list, please report it immediately below!
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      options:
+        - Windows 11
+        - Windows 10
+        - macOS
+        - Linux
+    validations:
+      required: true
+  - type: input
+    id: drive_id
+    attributes:
+      label: Drive Identifier Observed
+      placeholder: e.g. Disk 0, /dev/nvme0n1, /dev/sda, disk0s1
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Detailed Description
+      placeholder: Explain what was detected and under what physical hardware configuration.
+    validations:
+      required: true

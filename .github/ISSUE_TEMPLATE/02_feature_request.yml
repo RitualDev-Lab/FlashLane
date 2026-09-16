@@ -1,0 +1,30 @@
+name: ? Feature Request
+description: Suggest a new feature, platform adapter, or partition capability for FlashLane
+title: "[Feature]: <Brief summary of proposed feature>"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have an idea to make FlashLane faster, safer, or more versatile? We would love to hear it!
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Missing Capability
+      placeholder: What problem does this solve or what workflow is currently difficult?
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_solution
+    attributes:
+      label: Proposed Solution / Feature
+      placeholder: Describe the solution or user experience you would like to see.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      placeholder: How do tools like Rufus, BalenaEtcher, or Ventoy handle this currently?
+    validations:
+      required: false

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: ?? GitHub Discussions
+    url: https://github.com/RitualDev-Lab/FlashLane/discussions
+    about: Ask questions, discuss ISO compatibility, or share ideas!
+  - name: ??? Security Vulnerability Reporting
+    url: https://github.com/RitualDev-Lab/FlashLane/security/advisories/new
+    about: Privately disclose a security or system safety vulnerability.

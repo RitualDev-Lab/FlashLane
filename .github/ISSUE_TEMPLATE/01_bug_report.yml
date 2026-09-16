@@ -1,0 +1,66 @@
+name: ?? Bug Report
+description: Report an issue, flashing failure, or unexpected error in FlashLane
+title: "[Bug]: <Brief summary of the issue>"
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve FlashLane! Please provide as much detail as possible to help us reproduce the issue safely.
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      options:
+        - Windows 11
+        - Windows 10
+        - macOS (Apple Silicon M1/M2/M3/M4)
+        - macOS (Intel)
+        - Linux (Ubuntu / Debian-based)
+        - Linux (Arch / Manjaro)
+        - Linux (Fedora / RHEL)
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: iso_details
+    attributes:
+      label: ISO / IMG Name & Boot Type
+      placeholder: e.g. ubuntu-24.04-desktop-amd64.iso (Hybrid EFI) or Win11_23H2_English_x64.iso
+    validations:
+      required: true
+  - type: input
+    id: usb_details
+    attributes:
+      label: USB Flash Drive Make, Model & Size
+      placeholder: e.g. SanDisk Ultra Flair 32GB USB 3.0
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Execution Mode
+      options:
+        - Physical Write Mode
+        - Simulation Mode (Virtual Flasher)
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Select image '...'
+        2. Set partition scheme to 'GPT'
+        3. Click 'Start Writing'
+        4. See error '...'
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Terminal Log Output
+      placeholder: Paste the relevant lines from the FlashLane built-in execution log terminal.
+      render: shell
+    validations:
+      required: false
