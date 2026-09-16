@@ -1,17 +1,70 @@
+<div align="center">
+
 # ⚡ FlashLane
 
-> **Universal, high-speed bootable ISO/IMG USB writer for Windows, macOS, and Linux — with Rufus-grade partition control & non-destructive simulation.**
+### Universal, Ultra-Fast Bootable USB Flasher with Rufus-Grade Partition Control
+**Burn bootable Windows & Linux ISO/IMG drives on Windows, macOS, and Linux — with zero telemetry, dry-run simulation, and full partition control.**
 
 [![CI Build & Verify](https://github.com/RitualDev-Lab/FlashLane/actions/workflows/ci.yml/badge.svg)](https://github.com/RitualDev-Lab/FlashLane/actions)
-[![Release Multi-Platform](https://github.com/RitualDev-Lab/FlashLane/actions/workflows/release.yml/badge.svg)](https://github.com/RitualDev-Lab/FlashLane/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Electron](https://img.shields.io/badge/Electron-33-47848F?logo=electron&logoColor=white)](https://electronjs.org/)
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Release Multi-Platform](https://github.com/RitualDev-Lab/FlashLane/actions/workflows/release.yml/badge.svg)](https://github.com/RitualDev-Lab/FlashLane/releases)
+[![Cross-Platform](https://img.shields.io/badge/Platform-Windows%20|%20macOS%20|%20Linux-007ACC?style=for-the-badge&logo=linux&logoColor=white)](https://github.com/RitualDev-Lab/FlashLane/releases)
+[![Telemetry](https://img.shields.io/badge/Telemetry-0%25%20(100%25%20Private)-brightgreen?style=for-the-badge&logo=shield&logoColor=white)](https://github.com/RitualDev-Lab/FlashLane)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen?style=for-the-badge)](https://github.com/RitualDev-Lab/FlashLane/pulls)
+
+<p align="center">
+  <a href="#-quick-start-in-30-seconds"><b>⚡ Quick Start</b></a> •
+  <a href="#-why-flashlane-comparison"><b>⚖️ Why FlashLane vs Rufus vs Etcher</b></a> •
+  <a href="#-features"><b>🌟 Features</b></a> •
+  <a href="#-how-to-test-flashlane"><b>🧪 Safe Simulation Mode</b></a> •
+  <a href="#-multi-platform-releases-github-actions"><b>📦 Download</b></a> •
+  <a href="https://ritualdev-lab.github.io/DevShelf/"><b>📚 Featured on DevShelf</b></a>
+</p>
 
 ---
 
-## 🌟 Features
+</div>
+
+## ⚖️ Why FlashLane? (Comparison)
+
+Why settle for Windows-only tools like Rufus or ad-supported, telemetry-heavy apps like BalenaEtcher? FlashLane gives you the best of both worlds:
+
+| Feature | ⚡ FlashLane | Rufus | BalenaEtcher | Raspberry Pi Imager |
+|---|:---:|:---:|:---:|:---:|
+| **Cross-Platform OS Support** | <b>✅ Windows, macOS, Linux</b> | ❌ Windows Only | ✅ Windows, macOS, Linux | ✅ Windows, macOS, Linux |
+| **Partition Control (GPT vs MBR)** | <b>✅ Full Rufus-Grade Control</b> | ✅ Full Control | ❌ No (Raw DD Only) | ❌ No (Raw DD Only) |
+| **Target Architecture (UEFI vs BIOS)** | <b>✅ Selectable UEFI / Legacy BIOS</b> | ✅ Yes | ❌ No | ❌ No |
+| **Filesystems (NTFS, FAT32, exFAT, DD)** | <b>✅ All Schemes (Auto Large WIM)</b> | ✅ Yes | ❌ No (Raw image dump) | ⚠️ FAT32/ext4 only |
+| **Dry-Run Simulation Mode** | <b>✅ Test Full Write with 0 Risk</b> | ❌ No | ❌ No | ❌ No |
+| **Telemetry & Privacy** | <b>🛡️ 0% Telemetry (100% Private)</b> | ⚠️ Update pings | ❌ Heavy Google Analytics & Promos | ⚠️ Telemetry telemetry |
+| **Streaming Speed Pipeline** | <b>✅ 4MB Chunked I/O Pipeline</b> | ✅ High Speed | ⚠️ Medium Speed | ⚠️ Medium Speed |
+| **Integrity Validation** | <b>✅ Real-time Streaming SHA-256</b> | ✅ MD5/SHA-256 | ✅ Verify Pass | ✅ Verify Pass |
+| **Open Source (MIT)** | <b>✅ 100% Free & Open Source</b> | ✅ GPLv3 | ⚠️ Mixed / Proprietary telemetry | ✅ Apache 2.0 |
+
+---
+
+## ⚡ Quick Start in 30 Seconds
+
+### Download Precompiled Binaries
+Grab the latest release for your operating system from [GitHub Releases](https://github.com/RitualDev-Lab/FlashLane/releases):
+- **Windows**: `FlashLane-Setup.exe` (Installer) or `FlashLane-Portable.exe`
+- **macOS**: `FlashLane.dmg` (Universal Intel + Apple Silicon)
+- **Linux**: `FlashLane.AppImage` or `FlashLane.deb`
+
+### Run from Source
+```bash
+# 1. Clone repository
+git clone https://github.com/RitualDev-Lab/FlashLane.git
+cd FlashLane
+
+# 2. Install dependencies & launch dev server with hot reload
+pnpm install
+pnpm dev
+```
+
+---
+
+## 🌟 Key Features
 
 * **⚡ Ultra-High Speed Flashing Engine:**
   * 4MB chunked streaming I/O pipeline with real-time speed monitoring ($MB/s$) and accurate dynamic ETA calculation.
@@ -119,6 +172,22 @@ This generates `release/FlashLane 1.0.0.appx` ready for upload.
    ```
 2. Upload the `.appx` file into your Microsoft Partner Center submission dashboard.
 3. Fill in screenshots, description, and privacy policy, then click **Submit to the Store**.
+
+---
+
+## 🌐 RitualDev Ecosystem
+
+FlashLane is part of the [RitualDev Lab](https://github.com/RitualDev-Lab) open-source developer tooling suite:
+- **[DevShelf](https://ritualdev-lab.github.io/DevShelf/)** — Curated crowdsourced developer directory of free APIs, dev tools, and AI agents.
+- **[GitWhisper](https://github.com/RitualDev-Lab/GitWhisper)** — Zero-config AI Git commit generator running directly in your CLI.
+- **[AutoHeal-QA](https://github.com/RitualDev-Lab/autoheal-qa)** — Self-healing automated test runner powered by LLM root cause analysis.
+- **[LocalRAG-Kit](https://github.com/RitualDev-Lab/localrag-kit)** — Embedded offline RAG toolkit with zero cloud dependencies.
+
+---
+
+## 🏷️ Search Keywords & Tags
+
+`bootable-usb` • `rufus-alternative` • `etcher-alternative` • `iso-to-usb` • `usb-flasher` • `cross-platform` • `windows-11-usb` • `linux-live-usb` • `gpt-mbr-partition` • `electron` • `react` • `typescript`
 
 ---
 
