@@ -78,3 +78,55 @@ export interface LogEntry {
   level: 'info' | 'warn' | 'error' | 'success';
   message: string;
 }
+
+export interface GpgVerificationResult {
+  valid: boolean;
+  algorithm: 'RSA' | 'Ed25519' | 'ECDSA' | 'unknown';
+  keyId?: string;
+  fingerprint?: string;
+  signer?: string;
+  timestamp?: string;
+  error?: string;
+}
+
+export interface MultiDeviceFlashOptions {
+  imagePath: string;
+  driveIds: string[];
+  partitionScheme: 'MBR' | 'GPT';
+  targetSystem: 'BIOS' | 'UEFI';
+  fileSystem: 'FAT32' | 'NTFS' | 'exFAT' | 'RAW_DD';
+  verifyAfterWrite: boolean;
+  expectedChecksum?: string;
+  gpgSignaturePath?: string;
+  gpgPublicKey?: string;
+  isSimulation?: boolean;
+}
+
+export interface MultiDeviceProgress {
+  overallPercentage: number;
+  deviceProgress: Record<string, FlashProgress>;
+  activeDrives: number;
+  completedDrives: number;
+  failedDrives: number;
+  totalBytes: number;
+  bytesWritten: number;
+}
+
+export interface PxeServerConfig {
+  isoPath: string;
+  bindAddress: string;
+  tftpPort: number;
+  httpPort: number;
+  dhcpProxyEnabled: boolean;
+  bootloaderFileName: string;
+}
+
+export interface PxeServerStatus {
+  running: boolean;
+  bindAddress?: string;
+  tftpPort?: number;
+  httpPort?: number;
+  activeClients: number;
+  servedRequests: number;
+  startedAt?: string;
+}
