@@ -1,7 +1,7 @@
 {
   "name": "flashlane",
-  "version": "1.0.0",
-  "description": "Universal, high-speed bootable ISO/IMG USB writer for Windows, macOS, and Linux",
+  "version": "2.0.0",
+  "description": "Universal, high-speed bootable ISO/IMG USB writer with native Rust/Tauri engine and PXE server",
   "type": "module",
   "main": "dist-electron/main/index.js",
   "scripts": {
@@ -9,6 +9,7 @@
     "build": "tsc && vite build && electron-builder --dir",
     "build:electron": "tsc && vite build",
     "lint": "tsc --noEmit",
+    "test": "vitest run",
     "postinstall": "node scripts/ensure-electron.cjs"
   },
   "keywords": [
@@ -17,10 +18,12 @@
     "etcher",
     "bootable-usb",
     "iso-flasher",
-    "electron",
+    "tauri",
+    "rust",
+    "pxe-server",
     "cross-platform"
   ],
-  "author": "RitualDev Lab <developer@ritualdev.com>",
+  "author": "RitualDev Lab <security@ritualdev.in>",
   "license": "MIT",
   "dependencies": {
     "clsx": "^2.1.1",
@@ -42,6 +45,13 @@
     "typescript": "^5.7.2",
     "vite": "^6.0.1",
     "vite-plugin-electron": "^0.29.0",
-    "vite-plugin-electron-renderer": "^0.14.6"
+    "vite-plugin-electron-renderer": "^0.14.6",
+    "vitest": "^5.1.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "esbuild"
+    ]
   }
 }

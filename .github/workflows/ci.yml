@@ -33,5 +33,8 @@ jobs:
       - name: Type Check & Lint
         run: pnpm lint
 
+      - name: Run Unit Tests
+        run: pnpm test
+
       - name: Compile & Build Application
         run: pnpm build:electron
